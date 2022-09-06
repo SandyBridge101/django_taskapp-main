@@ -1,0 +1,49 @@
+{%extends './partials/base.html'%}
+{%block title%}
+{%endblock%}
+{% load crispy_forms_tags %}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card shadow">
+              <div class="card-header">
+                Write a report
+              </div>
+              <div class="card-body">
+                <form class="d-grid" method="POST">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <input class="btn btn-success btn-sm" type="submit" value="Save">
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="card shadow">
+              <div class="card-header">Task list</div>
+              <div class="card-body">
+                {%for report in data%}
+                
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-8">
+                      <p><small>{{report.date}}</small></p>
+                      <strong>{{report.topic}}</strong>
+                    </div>
+                    <div class="col-4">
+                      <a class="btn btn-info btn-sm" href="{% url 'report-edit' report.id%}">View</a>
+                      <a class="btn btn-danger btn-sm" href="{% url 'report-delete' report.id %}">Delete</a>
+                    </div>
+                  </div>
+                </li>
+                {%endfor%}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+</div>
+{%endblock%}
